@@ -3,7 +3,7 @@ from Util import *
 
 class Perceptron:
 
-    def __init__(self, num_inputs, learning_rate):
+    def __init__(self, num_inputs, lea, learning_rate):
         self.weights = self.get_weights(num_inputs)
         self.bias = 5
         self.learning_rate = learning_rate
