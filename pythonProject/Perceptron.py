@@ -3,9 +3,9 @@ from Util import *
 
 class Perceptron:
 
-    def __init__(self, num_inputs, lea, learning_rate):
+    def __init__(self, num_inputs, learning_rate):
         self.weights = self.get_weights(num_inputs)
-        self.bias = 5
+        self.bias = 0.1
         self.learning_rate = learning_rate
 
     def get_weights(self, amount):
@@ -51,20 +51,29 @@ class Perceptron:
 
     def train(self, dataset, epochs=0):
         accuracy=0.0
+
         predictions=[]
         if epochs==0:
+            previous_accuracy = []
             i=0
             counter = 1
-            while(accuracy!=1):
+            while(accuracy<1):
                 observation=get_observation(dataset, i)
                 predictions.append(self.little_train(observation))
                 if i==get_dataset_size(dataset)-1:#last element
                     i=0
                     accuracy = self.get_accuracy(dataset, predictions)
+                    previous_accuracy.append(accuracy)
                     self.print_state(counter, accuracy)
                     counter+=1
                     predictions.clear()
+                    if counter > 50 and len(set(previous_accuracy[-10:]))==1:
+                        break
+                    # if counter % 50 == 0:
+                    #     input("pause")
                 i+=1
+
+
         else:
             for i in range(epochs):
                 for j in range(get_dataset_size(dataset)):
