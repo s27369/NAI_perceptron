@@ -62,3 +62,5 @@ def get_rand_nonzero():
     while x==0:
         x = random.random()
     return x
+def get_num_of_attributes(dataset):
+    return len(dataset.keys())-1

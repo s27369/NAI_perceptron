@@ -5,7 +5,7 @@ class Perceptron:
 
     def __init__(self, num_inputs, learning_rate):
         self.weights = self.get_weights(num_inputs)
-        self.bias = 1
+        self.bias = 5
         self.learning_rate = learning_rate
 
     def get_weights(self, amount):
@@ -28,8 +28,8 @@ class Perceptron:
 
     def little_train(self, observation):
         p = self.predict(observation)
-        if p != observation[label_name]:
-            delta = self.get_delta(observation[label_name], p)
+        if p != observation[-1]:
+            delta = self.get_delta(observation[-1], p)
             self.correct_bias(delta)
             self.correct_weights(observation, delta)
         return p
@@ -68,10 +68,11 @@ class Perceptron:
         else:
             for i in range(epochs):
                 for j in range(get_dataset_size(dataset)):
-                    observation = get_observation(dataset, i)
+                    observation = get_observation(dataset, j)
                     predictions.append(self.little_train(observation))
                 accuracy = self.get_accuracy(dataset, predictions)
                 self.print_state(i, accuracy)
+                predictions.clear()
 
     def print_state(self, counter, accuracy):
         print(f"Iteration {counter}: accuracy={accuracy}, weights={self.weights}, bias={self.bias}")
