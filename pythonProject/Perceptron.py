@@ -34,11 +34,44 @@ class Perceptron:
             self.correct_weights(observation, delta)
         return p
 
-
-
     def correct_weights(self,observation, delta):
         new_weights = [self.weights[i]+(delta*observation[i]*self.learning_rate) for i in range(len(self.weights))]
         self.weights = new_weights
     def correct_bias(self, delta):
         new_bias = self.bias+(delta*self.learning_rate)
         self.bias = new_bias
+
+    def get_accuracy(self, dataset, predictions):
+        correct=0
+        for i in range(len(predictions)):
+            if dataset[label_name][i] == predictions[i]:
+                correct+=1
+        return correct/len(predictions)
+
+
+    def train(self, dataset, epochs=0):
+        accuracy=0.0
+        predictions=[]
+        if epochs==0:
+            i=0
+            counter = 1
+            while(accuracy!=1):
+                observation=get_observation(dataset, i)
+                predictions.append(self.little_train(observation))
+                if i==get_dataset_size(dataset)-1:#last element
+                    i=0
+                    accuracy = self.get_accuracy(dataset, predictions)
+                    self.print_state(counter, accuracy)
+                    counter+=1
+                    predictions.clear()
+                i+=1
+        else:
+            for i in range(epochs):
+                for j in range(get_dataset_size(dataset)):
+                    observation = get_observation(dataset, i)
+                    predictions.append(self.little_train(observation))
+                accuracy = self.get_accuracy(dataset, predictions)
+                self.print_state(i, accuracy)
+
+    def print_state(self, counter, accuracy):
+        print(f"Iteration {counter}: accuracy={accuracy}, weights={self.weights}, bias={self.bias}")
