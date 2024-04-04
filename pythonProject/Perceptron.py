@@ -51,7 +51,7 @@ class Perceptron:
 
     def train(self, dataset, epochs=0):
         accuracy=0.0
-
+        previous_accuracy = []
         predictions=[]
         if epochs==0:
             previous_accuracy = []
@@ -68,7 +68,7 @@ class Perceptron:
                     counter+=1
                     predictions.clear()
                     if counter > 50 and len(set(previous_accuracy[-10:]))==1:
-                        break
+                        return previous_accuracy
                     # if counter % 50 == 0:
                     #     input("pause")
                 i+=1
@@ -80,8 +80,11 @@ class Perceptron:
                     observation = get_observation(dataset, j)
                     predictions.append(self.little_train(observation))
                 accuracy = self.get_accuracy(dataset, predictions)
+                previous_accuracy.append(accuracy)
                 self.print_state(i, accuracy)
                 predictions.clear()
+            return previous_accuracy
+
 
     def print_state(self, counter, accuracy):
         print(f"Iteration {counter}: accuracy={accuracy}, weights={self.weights}, bias={self.bias}")
