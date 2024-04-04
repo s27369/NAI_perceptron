@@ -25,7 +25,7 @@ def test_model(dataset, perceptron):
     acc = perceptron.get_accuracy(dataset, predictions)
     print(f"Accuracy={acc}")
 
-def interface(train, test, perceptron):
+def interface(test, perceptron):
     quit=False
     while not quit:
         print("Choose number:\n1 - input sample data to classify\n2 - train, test perceptron and get graph\n3 - quit\n>>>", end="")
@@ -58,7 +58,6 @@ def interface(train, test, perceptron):
 
 
 if __name__ == '__main__':
-    print("Iris-Setosa".isalpha())
 
     train, test = file_to_dict(r"data/iris_training.txt"), file_to_dict(r"data/iris_training.txt")
     perceptron = Perceptron(get_num_of_attributes(train), 0.2)
