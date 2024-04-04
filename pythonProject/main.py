@@ -66,7 +66,7 @@ if __name__ == '__main__':
     acc =perceptron.train(train, 100)
     # acc = perceptron.train(train)
     get_plot(acc)
-    interface(train, test, perceptron)
+    interface(test, perceptron)
 
 
 
